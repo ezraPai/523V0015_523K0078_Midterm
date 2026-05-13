@@ -1,0 +1,5 @@
+defaults: base.yaml
+run_name: bilstm_attn_main
+model:
+  type: bilstm_attn
+  hidden_dim: 128

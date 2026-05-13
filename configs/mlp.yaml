@@ -1,0 +1,4 @@
+defaults: base.yaml
+run_name: mlp_main
+model:
+  type: mlp

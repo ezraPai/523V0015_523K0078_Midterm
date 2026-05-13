@@ -1,0 +1,4 @@
+defaults: bilstm_attn.yaml
+run_name: exp_dropout_0.2
+model:
+  dropout: 0.2

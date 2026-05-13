@@ -1,0 +1,6 @@
+defaults: base.yaml
+run_name: lstm_main
+model:
+  type: lstm
+  hidden_dim: 128
+  num_layers: 1

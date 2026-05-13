@@ -1,0 +1,34 @@
+run_name: null
+seed: 42
+
+data:
+  dataset: imdb
+  cache_dir: data/raw
+  processed_dir: data/processed
+  vocab_size: 20000
+  max_len: 256
+  min_freq: 2
+  val_size: 0.1
+
+model:
+  type: mlp
+  embed_dim: 128
+  hidden_dim: 128
+  num_layers: 1
+  dropout: 0.3
+  num_classes: 2
+  pad_idx: 0
+
+train:
+  batch_size: 64
+  epochs: 10
+  lr: 1.0e-3
+  optimizer: adam
+  weight_decay: 0.0
+  grad_clip: 1.0
+  early_stopping_patience: 3
+  device: auto
+
+logging:
+  log_every_n_steps: 100
+  save_last_ckpt: true

@@ -1,0 +1,4 @@
+defaults: bilstm_attn.yaml
+run_name: exp_embed_dim_128
+model:
+  embed_dim: 128
