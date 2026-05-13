@@ -1,120 +1,73 @@
-# Midterm project 
+# Text Sentiment Analysis — Final Project
+## Course 503077 — Deep Learning, Semester 2 2025-2026
 
-# Text Sentiment Analysis: Comparing Multi-Layer Perceptrons and Recurrent Networks (RNN/LSTM/GRU)
+**Team:** 523V0015 · 523K0078
 
-## Project Overview
+**Division of work:**
+- 523V0015: Data preprocessing, MLP baseline, BiLSTM+Attention model, controlled experiments
+- 523K0078: LSTM model, comparative analysis, error analysis, report writing
 
-This project focuses on **text sentiment analysis**, where the goal is to classify text (e.g., movie reviews) into sentiment categories such as **positive** or **negative**.
+---
 
-The project compares two major neural network approaches:
-- **MLP (Multi-Layer Perceptron)** — treats text as bag-of-words (ignores word order)
-- **RNN-based models (RNN, LSTM, GRU)** — capture sequential dependencies in text
+## Environment setup
 
-
-## Key Objectives
-
-- Develop a complete NLP preprocessing pipeline (text cleaning, vocabulary construction, sequence encoding, and dynamic batch padding).
-
-- Implement and train an MLP for text that takes fixed-length sentence representions as input.
-
-- Understand, implement gating mechanisms and compare three recurrent architectures systematically (RNN, LSTM, or GRU).
-
-- Conduct controlled ablation studies (network depth, embedding dimensions, etc.).
-
-- Perform qualitative and quantitative error analysis.
-
-## Dataset
-
-- IMDb Movie Reviews (50,000 samples, binary sentiment).
-
-
-## Technical Requirements
-
-### 🔹 Part A: Data Preprocessing
-Build a reusable pipeline including:
-- Text cleaning (remove HTML, normalize case)
-- Tokenization & vocabulary creation (10k–30k tokens)
-- Encoding text into sequences
-- Padding sequences to fixed length
-
-### 🔹 Part B: MLP Model
-- Input: mean-pooled word embeddings
-
-- Architecture:
-
-```
-            Embedding → Mean Pool → Linear → ReLU → Dropout → Linear → Output
+```bash
+pip install -r requirements.txt
 ```
 
-- Train and evaluate performance
+Tested with Python 3.10+. A CUDA-capable GPU is optional;
+the pipeline auto-detects GPU availability.
 
-- Perform ablation experiments
+---
 
+## How to reproduce results
 
-### 🔹 Part C: RNN Models
-Implement at least **2 variants**:
-- Vanilla RNN
-- LSTM
-- GRU
-
-Key requirements:
-- Handle variable-length sequences (e.g., packed sequences)
-- Run experiments:
-1. Compare RNN vs LSTM vs GRU
-2. Test embedding sizes (64, 128, 256)
-3. Compare 1-layer vs 2-layer networks
-
-### 🔹 Part D: Comparative Analysis
-- Compare all models on:
-- Accuracy
-- Training speed
-- Convergence behavior
-- Present results in tables and plots (learning curves)
-
-## Experiments
-Minimum required:
-1. Model comparison (RNN variants)
-2. Embedding dimension tuning
-3. Network depth analysis
-
-## Project Structure
-
-The project is organized as follows:
-
+### Step 1 — Preprocess the dataset
+```bash
+python src/preprocess.py
 ```
-ID1_ID2_Midterm/
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02_mlp.ipynb
-│   ├── 03_rnn.ipynb
-│   └── 04_analysis.ipynb
-├── src/
-│   ├── preprocess.py
-│   ├── mlp_model.py
-│   ├── rnn_model.py
-│   ├── train.py
-│   └── evaluate.py
-├── checkpoints/
-│   ├── mlp_best.pt
-│   └── rnn_best.pt
-├── report/
-│   └── report.pdf
-├── requirements.txt
-└── README.md
+Downloads the IMDb dataset via HuggingFace and saves processed files
+to `data/processed/`.
+
+### Step 2 — Train all models and run ablations
+```bash
+bash scripts/run_all.sh
+```
+This trains MLP, LSTM, and BiLSTM+Attention, then runs all ablation
+experiments. Checkpoints and logs are saved under `experiments/`.
+
+Alternatively, train a single model:
+```bash
+bash scripts/run_baselines.sh
+bash scripts/run_ablations.sh
 ```
 
-## Report Requirements
-- Max 15 pages
-- Include:
-  - Abstract (≤200 words)
-  - Dataset analysis
-  - Model descriptions
-  - Experiment results
-  - Comparative discussion
+### Step 3 — Generate results and analysis
+Run the following notebooks in order using Jupyter:
+1. `notebooks/01_eda.ipynb`          — EDA figures
+2. `notebooks/02_results_comparison.ipynb` — comparison tables + learning curves
+3. `notebooks/03_error_analysis.ipynb`     — error analysis
 
+Outputs are saved to `report/figs/` and `report/tables/`.
 
-## Grading Criteria
-- Data preprocessing quality
-- Model implementation correctness
-- Experiment design and analysis
-- Clarity of comparison and reporting
+---
+
+## Report
+
+`report/report.pdf` — final written report
+
+---
+
+## Project structure
+configs/          — YAML config files (base + per-model + ablations)
+data/             — Raw and processed dataset (auto-populated)
+experiments/      — Training logs and checkpoints (auto-populated)
+notebooks/        — EDA, results, and error analysis notebooks
+report/           — Report PDF, figures, and tables
+results/          — Serialized ablation results
+scripts/          — Shell scripts to run the pipeline
+src/              — Source code (preprocessing, models, training, evaluation)
+requirements.txt  — Python dependencies
+---
+
+(End of README content)
